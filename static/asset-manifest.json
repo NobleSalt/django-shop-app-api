@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6001a938.css",
+    "main.js": "/static/js/main.85c1aba8.js",
+    "static/media/app-download-img-right.png": "/static/media/app-download-img-right.be2ca34b8bcee74a4aad.png",
+    "static/media/play-store.svg": "/static/media/play-store.104c2fa83bf371f657741af08c97ff76.svg",
+    "static/media/app-download-img-left.png": "/static/media/app-download-img-left.39f94856d21c116cee71.png",
+    "static/media/Rainbow-Chard.jpeg": "/static/media/Rainbow-Chard.d1bbc9c9d310cf695122.jpeg",
+    "static/media/different-types-grocery.jpg": "/static/media/different-types-grocery.cc78029bad7a8789329e.jpg",
+    "static/media/freshness-guaranteed.jpg": "/static/media/freshness-guaranteed.cc78029bad7a8789329e.jpg",
+    "static/media/delivery-boy.png": "/static/media/delivery-boy.a84be03ebdce0c0cd826.png",
+    "static/media/best-quality-products.jpg": "/static/media/best-quality-products.7d480b23d5295e9a5474.jpg",
+    "static/media/emmanuel-izuchukwu.jpg": "/static/media/emmanuel-izuchukwu.dd1eeb83ac4521c2b005.jpg",
+    "static/media/Cauliflower.jpg": "/static/media/Cauliflower.7a45b64c8ae71d73085d.jpg",
+    "static/media/app-store.svg": "/static/media/app-store.c4382818bcba5334704d63cc04b5b7a6.svg",
+    "static/media/pet-care.webp": "/static/media/pet-care.374123a7fbdfecab0a3f.webp",
+    "static/media/snacks-instant.webp": "/static/media/snacks-instant.b2c0aad65dbd8ca3c616.webp",
+    "static/media/fresh-sea-food.webp": "/static/media/fresh-sea-food.ad8f22e574ed405c8d9c.webp",
+    "static/media/honey.webp": "/static/media/honey.bc809b96072bd87c7e5e.webp",
+    "static/media/baby-care.webp": "/static/media/baby-care.f4721eaf869752b2e261.webp",
+    "static/media/house-hold.webp": "/static/media/house-hold.642c365d0c34cec5131d.webp",
+    "static/media/beauty-health.webp": "/static/media/beauty-health.96efe4cf082e540a9baf.webp",
+    "static/media/sports-fitness.webp": "/static/media/sports-fitness.5d5f20af8e79b9659aec.webp",
+    "static/media/milk-&-diary.webp": "/static/media/milk-&-diary.d0d5a3b0dc5804e2cde0.webp",
+    "static/media/biscuits-cakes.webp": "/static/media/biscuits-cakes.dd925410fdaf2c876a4e.webp",
+    "static/media/drinks.webp": "/static/media/drinks.17d4bb5855724133debc.webp",
+    "static/media/cooking-essentials.webp": "/static/media/cooking-essentials.3c98c952c1c84686c026.webp",
+    "static/media/jam-jelly.webp": "/static/media/jam-jelly.68d5c84cf652705b1916.webp",
+    "static/media/pickle.webp": "/static/media/pickle.196313107a34d1c4b0ae.webp",
+    "static/media/logo-light.svg": "/static/media/logo-light.a79dd130981a5b1e8c438342e2c65a08.svg",
+    "index.html": "/index.html",
+    "main.6001a938.css.map": "/static/css/main.6001a938.css.map",
+    "main.85c1aba8.js.map": "/static/js/main.85c1aba8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6001a938.css",
+    "static/js/main.85c1aba8.js"
+  ]
+}
