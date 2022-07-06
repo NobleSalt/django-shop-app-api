@@ -4,6 +4,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from api.views import (
     CartAction,
     FetchCart,
+    ProfileView,
     category_list,
     create_store,
     get_login,
@@ -35,6 +36,7 @@ urlpatterns = [
     path("search_product/", search_product.as_view()),
     path("fetch_cart/", FetchCart.as_view()),
     path("cart_action/", CartAction.as_view()),
+    path("profile/", ProfileView.as_view()),
     # path('get_login/<email>/', get_login),
     # path('products/', product_list),
 ]

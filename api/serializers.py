@@ -2,7 +2,7 @@ import json
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
-from api.models import Cart, CartItem, Category, Product, Store, SubCategory
+from api.models import Cart, CartItem, Category, Order, Product, Store, SubCategory
 
 User = get_user_model()
 
@@ -19,6 +19,13 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__"
+
+
+class OrderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Order
+        fields = ["id", "date_created", "status", "cart_id","total"]
 
 
 class CartItemSerializer(serializers.ModelSerializer):
@@ -55,6 +62,12 @@ class CartSerializer(serializers.ModelSerializer):
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
+        fields = "__all__"
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
         fields = "__all__"
 
 

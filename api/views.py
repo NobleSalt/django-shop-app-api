@@ -1,4 +1,3 @@
-from itertools import product
 import json
 from django.shortcuts import render
 from .serializers import *
@@ -17,6 +16,8 @@ from rest_framework.authentication import TokenAuthentication
 from django.views.decorators.csrf import csrf_exempt
 from django_filters import filters
 from rest_framework.views import APIView
+
+from django.db.models import Count, Q
 
 # Create your views here.
 def index(request):
@@ -106,7 +107,6 @@ class CartAction(APIView):
         user = self.request.user
         # get or create user cart
         cart, created = Cart.objects.get_or_create(user=user, order_complete="NO")
-        print(cart)
         # parse request body to dictionary
         data = JSONParser().parse(self.request)
         product_id = data["product_id"]
@@ -120,7 +120,6 @@ class CartAction(APIView):
             if action == "remove":
                 cartitem = cart.cartitems.get(product=product)
                 print("cartitem", cartitem)
-                print(dir(cartitem))
                 cartitem.delete()
             else:
                 cartitem, created_cartitem = cart.cartitems.get_or_create(
@@ -368,34 +367,57 @@ class ProfileView(APIView):
         # get user
         user = self.request.user
         # get or create user cart
-        cart = Cart.objects.all(user=user)
+        # cart, created = Cart.objects.get_or_create(user=user, order_complete="NO")
         # parse request body to dictionary
         data = JSONParser().parse(self.request)
+
+        action = data["action"]
         """
         TODO feature: total_order
         TODO feature: pending_order
         TODO feature: processing_order
         TODO feature: complete_order
         """
-        product_id = data["product_id"]
-        product_amount = data["product_amount"]
-        action = data["action"]
         # get product by id
-        product = Product.objects.get(id=product_id)
-        if created:
-            cart.cartitems.get_or_create(product=product, amount=product_amount)
-        else:
-            if action == "remove":
-                cartitem = cart.cartitems.get(product=product)
-                print("cartitem", cartitem)
-                print(dir(cartitem))
-                cartitem.delete()
-            else:
-                cartitem, created_cartitem = cart.cartitems.get_or_create(
-                    product=product
-                )
-                cartitem.amount = product_amount
-                cartitem.save()
+        response = {}
+        order = Order.objects.filter(user=user)
+        orders = OrderSerializer(order, many=True)
+        if action == "dashboard":
+            pending_order = Order.objects.filter(user=user, status="PENDING")
+            processing_order = Order.objects.filter(user=user, status="PROCESSING")
+            complete_order = Order.objects.filter(user=user, status="DELIVERED")
+            canceled_order = Order.objects.filter(user=user, status="CANCELED")
+            total_order = order.count()
 
-        serializer = CartSerializer(instance=cart)
-        return Response(serializer.data)
+            response = {
+                "order": {
+                    "pending_order": pending_order.count(),
+                    "processing_order": processing_order.count(),
+                    "complete_order": complete_order.count(),
+                    "canceled_order": canceled_order.count(),
+                    "total_order": total_order,
+                },
+                "orders": orders.data,
+            }
+        if action == "my_orders":
+            order = Order.objects.filter(user=user)
+            response = {"orders": orders.data, "order": {}}
+        if action == "profile":
+            response = {"user": UserSerializer(user).data, "orders": [], "order": {}}
+
+        # if action == "remove":
+        #     cartitem = cart.cartitems.get(product=product)
+        #     print("cartitem", cartitem)
+        #     # print(dir(cartitem))
+        #     cartitem.delete()
+        # else:
+        #     cartitem, created_cartitem = cart.cartitems.get_or_create(product=product)
+        #     cartitem.amount = product_amount
+        #     cartitem.save()
+
+        # serializer = CartSerializer(instance=cart)
+        response["action"] = action
+        return Response(
+            response,
+            status=status.HTTP_200_OK,
+        )

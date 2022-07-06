@@ -19,6 +19,14 @@ class AbstractBaseModel(models.Model):
         abstract = True
 
 
+ORDER_STATUS = (
+    ("PENDING", "PENDING"),
+    ("PROCESSING", "PROCESSING"),
+    ("CANCELED", "CANCELED"),
+    ("DELIVERED", "DELIVERED"),
+)
+
+
 CONDITION_CHOICES = (
     ("USED", "USED"),
     ("NEW", "NEW"),
@@ -111,7 +119,7 @@ class Product(AbstractBaseModel):
 
 
 class Cart(AbstractBaseModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     order_complete = models.CharField(
         max_length=5, choices=ANSWER_CHOICES, default="NO"
     )
@@ -121,12 +129,33 @@ class Cart(AbstractBaseModel):
 
 
 class CartItem(AbstractBaseModel):
-    product = models.ForeignKey(Product, related_name="cartitems", on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product, related_name="cartitems", on_delete=models.CASCADE
+    )
     amount = models.PositiveBigIntegerField(default=1)
     cart = models.ForeignKey(Cart, related_name="cartitems", on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f"{self.product} from {self.cart}"
+
+
+# class CustomOrderManager(models.Manager):
+#     def get_pending_order
+
+
+class Order(AbstractBaseModel):
+    status = models.CharField(max_length=100, default="PENDING", choices=ORDER_STATUS)
+    cart = models.OneToOneField(
+        Cart, related_name="order", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    @property
+    def total(self):
+        total = 0
+        for item in self.cart.cartitems.all():
+            total += item.amount * item.product.price
+        return total
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
